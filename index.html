@@ -553,6 +553,210 @@ footer {
 
   
 
+
+  /* ── Work / Portfolio ─────────────────────────── */
+  #work { background: var(--navy); }
+
+  .work-intro {
+    color: var(--gray);
+    font-size: 15px;
+    max-width: 600px;
+    line-height: 1.85;
+    margin-bottom: 56px;
+  }
+
+  /* Masonry-style grid */
+  .work-masonry {
+    columns: 3;
+    column-gap: 3px;
+    margin-bottom: 48px;
+  }
+
+  .work-item {
+    break-inside: avoid;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 3px;
+    cursor: pointer;
+    display: block;
+    background: var(--navy2);
+  }
+
+  .work-item::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--yellow);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s ease;
+    z-index: 3;
+  }
+
+  .work-item:hover::before { transform: scaleX(1); }
+
+  .work-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.5s ease, filter 0.4s ease;
+    filter: brightness(0.92) contrast(1.02);
+  }
+
+  .work-item:hover img {
+    transform: scale(1.04);
+    filter: brightness(1) contrast(1.05);
+  }
+
+  .work-item-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(8,9,12,0.92) 0%,
+      rgba(8,9,12,0.3) 45%,
+      transparent 100%
+    );
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 20px 18px;
+  }
+
+  .work-item:hover .work-item-overlay { opacity: 1; }
+
+  .work-item-type {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 3px; text-transform: uppercase;
+    color: var(--yellow); margin-bottom: 5px;
+  }
+
+  .work-item-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px; font-weight: 600;
+    color: var(--white); line-height: 1.3;
+    margin-bottom: 5px;
+  }
+
+  .work-item-desc {
+    font-size: 11px; color: var(--gray);
+    line-height: 1.5;
+  }
+
+  /* Number badge */
+  .work-item-num {
+    position: absolute;
+    top: 12px; right: 12px;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 1px;
+    color: rgba(245,197,24,0.7);
+    background: rgba(8,9,12,0.6);
+    padding: 3px 8px;
+    z-index: 3;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .work-item:hover .work-item-num { opacity: 1; }
+
+  /* Lightbox */
+  .lightbox {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(8,9,12,0.96);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    cursor: zoom-out;
+    backdrop-filter: blur(8px);
+  }
+  .lightbox.open { display: flex; }
+
+  .lightbox img {
+    max-width: 90vw;
+    max-height: 90vh;
+    object-fit: contain;
+    border: 1px solid rgba(245,197,24,0.2);
+    box-shadow: 0 0 80px rgba(0,0,0,0.8);
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: 24px; right: 32px;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 28px; font-weight: 300;
+    color: var(--yellow);
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.2s;
+  }
+  .lightbox-close:hover { color: var(--white); }
+
+  .lightbox-nav {
+    position: absolute;
+    top: 50%; transform: translateY(-50%);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 32px; font-weight: 700;
+    color: rgba(245,197,24,0.6);
+    cursor: pointer;
+    padding: 12px 20px;
+    transition: color 0.2s;
+    user-select: none;
+  }
+  .lightbox-nav:hover { color: var(--yellow); }
+  .lightbox-prev { left: 20px; }
+  .lightbox-next { right: 20px; }
+
+  .lightbox-info {
+    position: absolute;
+    bottom: 28px; left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+  }
+  .lightbox-info-type {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 10px; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--yellow);
+    margin-bottom: 4px;
+  }
+  .lightbox-info-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px; font-weight: 600;
+    color: var(--white);
+  }
+  .lightbox-counter {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 12px; color: var(--gray);
+    margin-top: 4px; letter-spacing: 2px;
+  }
+
+  .work-cta-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
+
+  .work-cta-label {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 11px; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--gray2);
+  }
+
+  @media (max-width: 900px) {
+    .work-masonry { columns: 2; }
+  }
+  @media (max-width: 560px) {
+    .work-masonry { columns: 1; }
+  }
+
 </style>
 </head>
 <body>
@@ -590,7 +794,7 @@ footer {
     </div>
     <div class="hero-cta">
       <a href="mailto:naitikdave7@gmail.com" class="btn-primary">Hire Me ↗</a>
-      <a href="https://www.linkedin.com/in/naitik-dave-50a574114/" target="_blank" class="btn-outline">LinkedIn ↗</a>
+      <a href="https://linkedin.com/in/naitikdave" target="_blank" class="btn-outline">LinkedIn ↗</a>
     </div>
   </div>
 
@@ -629,7 +833,7 @@ footer {
           </li>
           <li>
             <div class="contact-icon">in</div>
-            <a href="https://www.linkedin.com/in/naitik-dave-50a574114/" target="_blank">linkedin.com/in/naitikdave</a>
+            <a href="https://linkedin.com/in/naitikdave" target="_blank">linkedin.com/in/naitikdave</a>
           </li>
           <li>
             <div class="contact-icon">◎</div>
@@ -817,20 +1021,171 @@ footer {
 
 
 
+
+
+
 <!-- WORK -->
 <section id="work">
-  <div class="section-inner" style="padding-top:80px; padding-bottom:80px;">
+  <div class="section-inner">
     <div class="section-tag">006 — Portfolio</div>
     <h2 class="section-title">Recent Work</h2>
-    <p style="color:var(--gray); font-size:15px; max-width:540px; line-height:1.85; margin-bottom:44px;">
-      Creative and social media content for Lubi Electronics — industrial automation campaigns, product reels, motion graphics, and B2B LinkedIn strategy. Browse the live profiles below.
+    <p class="work-intro">
+      A selection of B2B industrial campaigns, product visuals, and brand creatives produced at Lubi Electronics — spanning automation, robotics, and global brand partnerships.
     </p>
-    <div style="display:flex; gap:16px; flex-wrap:wrap;">
-      <a href="https://www.instagram.com/lubielectronicsofficial/" target="_blank" class="btn-primary">Instagram ↗</a>
-      <a href="https://www.linkedin.com/company/lubielectronicsofficial/" target="_blank" class="btn-outline">LinkedIn ↗</a>
+
+    <div class="work-masonry">
+
+        <div class="work-item reveal" onclick="openLightbox(0)">
+          <div class="work-item-num">01</div>
+          <img src="https://naitik44.github.io/Profile/images/1.png" alt="Google Pixel" loading="lazy">
+          <div class="work-item-overlay">
+            <div class="work-item-type">Product Campaign</div>
+            <div class="work-item-title">Google Pixel</div>
+            <div class="work-item-desc">Pure. Smart. Pixel. — Consumer tech product ad with clean minimal layout.</div>
+          </div>
+        </div>
+        <div class="work-item reveal" onclick="openLightbox(1)">
+          <div class="work-item-num">02</div>
+          <img src="https://naitik44.github.io/Profile/images/2.png" alt="Power Under Control" loading="lazy">
+          <div class="work-item-overlay">
+            <div class="work-item-type">Industrial B2B</div>
+            <div class="work-item-title">Power Under Control</div>
+            <div class="work-item-desc">"Power Under Control" — Schneider TeSys contactor campaign for industrial applications.</div>
+          </div>
+        </div>
+        <div class="work-item reveal" onclick="openLightbox(2)">
+          <div class="work-item-num">03</div>
+          <img src="https://naitik44.github.io/Profile/images/3.png" alt="Switch the Power" loading="lazy">
+          <div class="work-item-overlay">
+            <div class="work-item-type">Industrial B2B</div>
+            <div class="work-item-title">Switch the Power</div>
+            <div class="work-item-desc">Switch the Power — TeSys/Schneider product visual with bold typographic treatment.</div>
+          </div>
+        </div>
+        <div class="work-item reveal" onclick="openLightbox(3)">
+          <div class="work-item-num">04</div>
+          <img src="https://naitik44.github.io/Profile/images/4.png" alt="The Core of Control" loading="lazy">
+          <div class="work-item-overlay">
+            <div class="work-item-type">Industrial B2B</div>
+            <div class="work-item-title">The Core of Control</div>
+            <div class="work-item-desc">The Core of Control — dark cinematic product poster for Schneider industrial switchgear.</div>
+          </div>
+        </div>
+        <div class="work-item reveal" onclick="openLightbox(4)">
+          <div class="work-item-num">05</div>
+          <img src="https://naitik44.github.io/Profile/images/5.png" alt="Precision in Every Degree" loading="lazy">
+          <div class="work-item-overlay">
+            <div class="work-item-type">Industrial B2B</div>
+            <div class="work-item-title">Precision in Every Degree</div>
+            <div class="work-item-desc">Precision in Every Degree — Omron temperature controller campaign with editorial design.</div>
+          </div>
+        </div>
+        <div class="work-item reveal" onclick="openLightbox(5)">
+          <div class="work-item-num">06</div>
+          <img src="https://naitik44.github.io/Profile/images/6.png" alt="Own Your Time" loading="lazy">
+          <div class="work-item-overlay">
+            <div class="work-item-type">Consumer Brand</div>
+            <div class="work-item-title">Own Your Time</div>
+            <div class="work-item-desc">Own Your Time — Noise smartwatch lifestyle campaign with vibrant neon treatment.</div>
+          </div>
+        </div>
+        <div class="work-item reveal" onclick="openLightbox(6)">
+          <div class="work-item-num">07</div>
+          <img src="https://naitik44.github.io/Profile/images/7.png" alt="Switch the Power — Variant" loading="lazy">
+          <div class="work-item-overlay">
+            <div class="work-item-type">Industrial B2B</div>
+            <div class="work-item-title">Switch the Power — Variant</div>
+            <div class="work-item-desc">Alternate composition of the Switch the Power series — refined layout and motion feel.</div>
+          </div>
+        </div>
+        <div class="work-item reveal" onclick="openLightbox(7)">
+          <div class="work-item-num">08</div>
+          <img src="https://naitik44.github.io/Profile/images/8.png" alt="Switch the Power — Dark" loading="lazy">
+          <div class="work-item-overlay">
+            <div class="work-item-type">Industrial B2B</div>
+            <div class="work-item-title">Switch the Power — Dark</div>
+            <div class="work-item-desc">Dark-mode variant for the Switch the Power series — dramatic high-contrast industrial aesthetic.</div>
+          </div>
+        </div>
+        <div class="work-item reveal" onclick="openLightbox(8)">
+          <div class="work-item-num">09</div>
+          <img src="https://naitik44.github.io/Profile/images/9.png" alt="Every Code Verified" loading="lazy">
+          <div class="work-item-overlay">
+            <div class="work-item-type">Industrial Vision</div>
+            <div class="work-item-title">Every Code Verified</div>
+            <div class="work-item-desc">"Every Code Verified" — Cognex barcode verifier product campaign with red laser visual.</div>
+          </div>
+        </div>
+        <div class="work-item reveal" onclick="openLightbox(9)">
+          <div class="work-item-num">010</div>
+          <img src="https://naitik44.github.io/Profile/images/10.png" alt="Built for Relentless Precision" loading="lazy">
+          <div class="work-item-overlay">
+            <div class="work-item-type">Robotics & Automation</div>
+            <div class="work-item-title">Built for Relentless Precision</div>
+            <div class="work-item-desc">Built for Relentless Precision — Lubi Electronics robotic arm campaign featuring Epson industrial robots.</div>
+          </div>
+        </div>
+    </div>
+
+    <div class="work-cta-row">
+      <span class="work-cta-label">See more on</span>
+      <a href="https://www.instagram.com/lubielectronicsofficial/" target="_blank" class="btn-primary" style="font-size:11px; padding:10px 24px;">Instagram ↗</a>
+      <a href="https://www.linkedin.com/company/lubielectronicsofficial/" target="_blank" class="btn-outline" style="font-size:11px; padding:10px 24px;">LinkedIn ↗</a>
     </div>
   </div>
 </section>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+  <span class="lightbox-close" onclick="closeLightbox()">✕</span>
+  <span class="lightbox-nav lightbox-prev" onclick="event.stopPropagation(); moveLightbox(-1)">‹</span>
+  <img id="lb-img" src="" alt="">
+  <span class="lightbox-nav lightbox-next" onclick="event.stopPropagation(); moveLightbox(1)">›</span>
+  <div class="lightbox-info">
+    <div class="lightbox-info-type" id="lb-type"></div>
+    <div class="lightbox-info-title" id="lb-title"></div>
+    <div class="lightbox-counter" id="lb-counter"></div>
+  </div>
+</div>
+
+<script>
+const lbData = [{"src":"https://naitik44.github.io/Profile/images/1.png","type":"Product Campaign","title":"Google Pixel"},{"src":"https://naitik44.github.io/Profile/images/2.png","type":"Industrial B2B","title":"Power Under Control"},{"src":"https://naitik44.github.io/Profile/images/3.png","type":"Industrial B2B","title":"Switch the Power"},{"src":"https://naitik44.github.io/Profile/images/4.png","type":"Industrial B2B","title":"The Core of Control"},{"src":"https://naitik44.github.io/Profile/images/5.png","type":"Industrial B2B","title":"Precision in Every Degree"},{"src":"https://naitik44.github.io/Profile/images/6.png","type":"Consumer Brand","title":"Own Your Time"},{"src":"https://naitik44.github.io/Profile/images/7.png","type":"Industrial B2B","title":"Switch the Power — Variant"},{"src":"https://naitik44.github.io/Profile/images/8.png","type":"Industrial B2B","title":"Switch the Power — Dark"},{"src":"https://naitik44.github.io/Profile/images/9.png","type":"Industrial Vision","title":"Every Code Verified"},{"src":"https://naitik44.github.io/Profile/images/10.png","type":"Robotics & Automation","title":"Built for Relentless Precision"}];
+let lbIndex = 0;
+
+function openLightbox(i) {
+  lbIndex = i;
+  renderLightbox();
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox(e) {
+  if (e && e.target !== document.getElementById('lightbox') && !e.target.classList.contains('lightbox-close')) return;
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function moveLightbox(dir) {
+  lbIndex = (lbIndex + dir + lbData.length) % lbData.length;
+  renderLightbox();
+}
+
+function renderLightbox() {
+  const d = lbData[lbIndex];
+  document.getElementById('lb-img').src = d.src;
+  document.getElementById('lb-type').textContent = d.type;
+  document.getElementById('lb-title').textContent = d.title;
+  document.getElementById('lb-counter').textContent = (lbIndex + 1) + ' / ' + lbData.length;
+}
+
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('lightbox').classList.contains('open')) return;
+  if (e.key === 'ArrowRight') moveLightbox(1);
+  if (e.key === 'ArrowLeft')  moveLightbox(-1);
+  if (e.key === 'Escape')     { document.getElementById('lightbox').classList.remove('open'); document.body.style.overflow=''; }
+});
+</script>
+
 
 <!-- INTERESTS -->
 <section id="interests">
