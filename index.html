@@ -796,10 +796,10 @@ footer {
     letter-spacing: 2px; margin-top: 4px;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 900px) {
     .work-slide { flex: 0 0 calc((100% - 3px) / 2); min-width: calc((100% - 3px) / 2); }
   }
-  @media (max-width: 480px) {
+  @media (max-width: 560px) {
     .work-slide { flex: 0 0 100%; min-width: 100%; }
   }
 
@@ -1183,21 +1183,45 @@ footer {
 
 <script>
 /* ── Slider ─────────────────────────────────────── */
-const TOTAL     = 9;
-const PER_PAGE  = 3;
-const MAX_PAGE  = Math.ceil(TOTAL / PER_PAGE) - 1;
-let   curPage   = 0;
+const TOTAL = 9;
+let curPage = 0;
+
+function getPerPage() {
+  const w = window.innerWidth;
+  if (w <= 560) return 1;
+  if (w <= 900) return 2;
+  return 3;
+}
+
+function getMaxPage() {
+  return Math.ceil(TOTAL / getPerPage()) - 1;
+}
 
 function getSlideWidth() {
-  const track = document.getElementById('sliderTrack');
-  const slide = track.querySelector('.work-slide');
-  return slide ? slide.offsetWidth + 3 : 0; // +3 = gap
+  const slide = document.querySelector('.work-slide');
+  return slide ? slide.offsetWidth + 3 : 0;
+}
+
+function rebuildDots() {
+  const pages = Math.ceil(TOTAL / getPerPage());
+  const dotsEl = document.getElementById('sliderDots');
+  dotsEl.innerHTML = '';
+  for (let i = 0; i < pages; i++) {
+    const btn = document.createElement('button');
+    btn.className = 'slider-dot' + (i === curPage ? ' active' : '');
+    btn.setAttribute('aria-label', 'Page ' + (i + 1));
+    btn.onclick = () => goToPage(i);
+    dotsEl.appendChild(btn);
+  }
 }
 
 function renderSlider() {
-  const track = document.getElementById('sliderTrack');
-  const offset = curPage * PER_PAGE * getSlideWidth();
-  track.style.transform = `translateX(-${offset}px)`;
+  const perPage  = getPerPage();
+  const maxPage  = getMaxPage();
+  curPage        = Math.min(curPage, maxPage);
+
+  const offset = curPage * perPage * getSlideWidth();
+  document.getElementById('sliderTrack').style.transform = `translateX(-${offset}px)`;
 
   // Dots
   document.querySelectorAll('.slider-dot').forEach((d, i) => {
@@ -1206,16 +1230,17 @@ function renderSlider() {
 
   // Arrows
   document.getElementById('sliderPrev').disabled = curPage === 0;
-  document.getElementById('sliderNext').disabled = curPage === MAX_PAGE;
+  document.getElementById('sliderNext').disabled = curPage === maxPage;
 
   // Counter
-  const from = curPage * PER_PAGE + 1;
-  const to   = Math.min(from + PER_PAGE - 1, TOTAL);
-  document.getElementById('sliderCounter').innerHTML = from + (to > from ? ' – ' + to : '') + ' &nbsp;/&nbsp; ' + TOTAL;
+  const from = curPage * perPage + 1;
+  const to   = Math.min(from + perPage - 1, TOTAL);
+  document.getElementById('sliderCounter').innerHTML =
+    from + (to > from ? ' – ' + to : '') + ' &nbsp;/&nbsp; ' + TOTAL;
 }
 
 function sliderMove(dir) {
-  curPage = Math.max(0, Math.min(MAX_PAGE, curPage + dir));
+  curPage = Math.max(0, Math.min(getMaxPage(), curPage + dir));
   renderSlider();
 }
 
@@ -1224,7 +1249,18 @@ function goToPage(p) {
   renderSlider();
 }
 
-renderSlider(); // init
+// Init + respond to resize
+rebuildDots();
+renderSlider();
+
+let resizeTimer;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+    rebuildDots();
+    renderSlider();
+  }, 120);
+});
 
 /* ── Lightbox ───────────────────────────────────── */
 const lbData = [{"src":"https://naitik44.github.io/Profile/images/1.png","type":"Product Campaign","title":"Google Pixel"},{"src":"https://naitik44.github.io/Profile/images/2.png","type":"Industrial B2B","title":"Power Under Control"},{"src":"https://naitik44.github.io/Profile/images/3.png","type":"Industrial B2B","title":"Switch the Power"},{"src":"https://naitik44.github.io/Profile/images/4.png","type":"Industrial B2B","title":"The Core of Control"},{"src":"https://naitik44.github.io/Profile/images/5.png","type":"Industrial B2B","title":"Precision in Every Degree"},{"src":"https://naitik44.github.io/Profile/images/6.png","type":"Consumer Brand","title":"Own Your Time"},{"src":"https://naitik44.github.io/Profile/images/8.png","type":"Industrial B2B","title":"Switch the Power — Dark"},{"src":"https://naitik44.github.io/Profile/images/9.png","type":"Industrial Vision","title":"Every Code Verified"},{"src":"https://naitik44.github.io/Profile/images/10.png","type":"Robotics & Automation","title":"Built for Relentless Precision"}];
