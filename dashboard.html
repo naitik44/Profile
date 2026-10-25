@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard - Control Panel</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&family=Lato:wght@300;400;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:   #08090c;
+    --navy2:  #0f1117;
+    --navy3:  #161b26;
+    --yellow: #f5c518;
+    --yellow2:#ffd740;
+    --white:  #eef0f4;
+    --gray:   #7a8494;
+    --gray2:  #3a4252;
+    --line:   rgba(245,197,24,0.12);
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--navy);
+    color: var(--white);
+    font-family: 'Lato', sans-serif;
+    font-size: 15px;
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .sidebar {
+    width: 400px;
+    background: var(--navy2);
+    border-right: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    overflow-y: auto;
+  }
+
+  .sidebar-header {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 5px;
+    color: var(--yellow);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 10px;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .form-group label {
+    display: block;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-bottom: 8px;
+  }
+
+  .form-group input, .form-group textarea {
+    width: 100%;
+    background: var(--navy);
+    border: 1px solid var(--gray2);
+    color: var(--white);
+    padding: 10px;
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+    border-radius: 4px;
+  }
+
+  .form-group input:focus, .form-group textarea:focus {
+    outline: none;
+    border-color: var(--yellow);
+  }
+
+  .form-group textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+
+  .btn-export {
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    padding: 14px 32px;
+    background: var(--yellow); color: var(--navy);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 12px; font-weight: 700; letter-spacing: 3px;
+    text-transform: uppercase; text-decoration: none; border: none; cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+    margin-top: 20px;
+  }
+
+  .btn-export:hover {
+    background: var(--yellow2);
+    transform: translateY(-2px);
+  }
+
+  .preview-area {
+    flex: 1;
+    background: #fff; /* white background to match iframe isolation */
+  }
+
+  iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  .section-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--yellow);
+    margin-bottom: 10px;
+    margin-top: 20px;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 5px;
+  }
+
+  .array-item {
+      border: 1px solid var(--gray2);
+      padding: 10px;
+      margin-bottom: 10px;
+      background: var(--navy3);
+  }
+</style>
+</head>
+<body>
+
+  <div class="sidebar">
+    <div class="sidebar-header">Dashboard</div>
+
+    <div id="form-container">
+      <div class="section-title">Hero Section</div>
+      <div class="form-group">
+        <label for="hero-name">Name (HTML allowed, e.g. NAITIK&lt;br&gt;&lt;span&gt;DAVE&lt;/span&gt;)</label>
+        <input type="text" id="hero-name">
+      </div>
+      <div class="form-group">
+        <label for="hero-sub">Subtitle</label>
+        <textarea id="hero-sub"></textarea>
+      </div>
+
+      <div class="section-title">About Section</div>
+      <div class="form-group">
+        <label for="about-p1">Paragraph 1 (HTML allowed)</label>
+        <textarea id="about-p1"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="about-p2">Paragraph 2 (HTML allowed)</label>
+        <textarea id="about-p2"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="about-p3">Paragraph 3 (HTML allowed)</label>
+        <textarea id="about-p3"></textarea>
+      </div>
+
+      <div class="section-title">Experience Section (First Item)</div>
+      <div class="form-group">
+        <label for="exp1-company">Company & Location</label>
+        <textarea id="exp1-company"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="exp1-role">Role</label>
+        <input type="text" id="exp1-role">
+      </div>
+
+      <div class="section-title">Portfolio Section</div>
+      <div id="portfolio-items"></div>
+    </div>
+
+    <button class="btn-export" id="export-btn">Export index.html</button>
+  </div>
+
+  <div class="preview-area">
+    <iframe id="preview-iframe"></iframe>
+  </div>
+
+  <script src="dashboard.js"></script>
+</body>
+</html>
